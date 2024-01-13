@@ -60,9 +60,11 @@ def run():
 
         if move == False:
             print("Invalid move: You entered invalid characters \n")
+            display_board(board)
             enter_move(board)
         elif (move < 1) or (move > 9):
             print("Invalid move: You entered numbers that are not within the range \n") #Evitamos movimientos Fuera de rango
+            display_board(board)
             enter_move(board)
         else:
             player = "User"
@@ -79,12 +81,16 @@ def run():
             if win(board) == "none": #Hacemos esta verificacion para que en caso de que todas los casillas esten ocupadas no se entre en un bucle infinito por movimientos de la maquina
                 if y and player == "User":
                     print("Invalid movement: movement is not possible because the space is occupied \n")
+                    display_board(board)
                     enter_move(board)
                 elif y and player == "Machine": #Nos aseguramos que si la maquina se equivoca haga otro movimiento hasta que sea valido
                     move = rand(1,9)
                     verify_move(board, move, player)
                 else:
                     moving(board, move, player)
+            elif win(board) == "tie":
+                print("Tie")
+                exit
             else:
                 print(f"{win(board)} has won the game!")
                 exit
@@ -106,6 +112,10 @@ def run():
     def win(board): #Verifica si hay un ganador
 
         win = "none"
+        board_lineal = []
+        for i in board:
+            for j in i:
+                board_lineal.append(j)
 
         for i in board:
             if all(i) and i[0] == "O":
@@ -131,6 +141,14 @@ def run():
         elif all(diag2) and diag2[0] == "X":
             win = "Machine"
 
+        tie = []
+        for i in board_lineal:
+            if isinstance(i,str):
+                tie.append("str")
+        if all(tie):
+            win = "tie"
+
+
         print(f"{win}")
 
         return win
@@ -139,6 +157,9 @@ def run():
         enter_move(board)
         if win(board) == "none":
             enter_move(board)
+        elif win(board) == "tie":
+            print("tie")
+            break
         else:
             print(f"{win(board)} has won the game!")
             break
