@@ -3,12 +3,6 @@ from random import randint as rand
 def run():
     #Tablero inicial: Son solo numeros
     board = [ [i for i in range(((j - 1) * 3) + 1,(j * 3) + 1)] for j in range(1,4)]
-
-    #Jugador Base
-    player = "Machine"
-
-    #Primer Movimiento por defecto
-    board[1][1] = "X"
     
     #Display del Tablero
     board_ = f"""
@@ -117,28 +111,35 @@ def run():
             for j in i:
                 board_lineal.append(j)
 
+        def some(list):
+            x = list[0]
+            for i in list:
+                if x != i:
+                    return False
+            return True
+
         for i in board:
-            if all(i) and i[0] == "O":
+            if some(i) and i[0] == "O":
                 win = "User"
-            elif all(i) and i[0] == "X":
+            elif some(i) and i[0] == "X":
                 win = "Machine"
         for i in list(zip(*board)): #Se verifica si alguna fila o columna este llena de algun movimiento en especifico
-            if all(i) and i[0] == "O":
+            if some(i) and i[0] == "O":
                 win = "User"
-            elif all(i) and i[0] == "X":
+            elif some(i) and i[0] == "X":
                 win = "Machine"
         
         #Tambien se hace la verificación por diagonal1es
         diag1 = [board[0][0],board[1][1],board[2][2]]
         diag2 = [board[0][2],board[1][1],board[2][0]]
 
-        if all(diag1) and diag1[0] == "O":
+        if some(diag1) and diag1[0] == "O":
             win = "User"
-        elif all(diag1) and diag1[0] == "X":
+        elif some(diag1) and diag1[0] == "X":
             win = "Machine"
-        elif all(diag2) and diag2[0] == "O":
+        elif some(diag2) and diag2[0] == "O":
             win = "User"
-        elif all(diag2) and diag2[0] == "X":
+        elif some(diag2) and diag2[0] == "X":
             win = "Machine"
 
         tie = []
@@ -158,10 +159,8 @@ def run():
         if win(board) == "none":
             enter_move(board)
         elif win(board) == "tie":
-            print("tie")
             break
         else:
-            print(f"{win(board)} has won the game!")
             break
 
 
