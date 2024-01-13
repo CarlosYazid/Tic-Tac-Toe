@@ -6,6 +6,9 @@ def run():
 
     #Jugador Base
     player = "Machine"
+
+    #Primer Movimiento por defecto
+    board[1][1] = "X"
     
     #Display del Tablero
     board_ = f"""
@@ -23,8 +26,7 @@ def run():
             |        |        |        |
             +--------+--------+--------+"""
     
-    #Primer Movimiento por defecto
-    board[1][1] = "X"
+    
     
     #Imprime el tablero por primera vez
     print(board_)
@@ -91,13 +93,15 @@ def run():
     def moving(board,move, player):#Esta funcion coloca el movimiento en el tablero
         if player == "User":
             board[int(move // 3.1)][int(move // 3.1)] = "O"
+            display_board(board)
             player = "Machine"
             move = rand(1,9)
             verify_move(board, move, player)
+
         elif player == "Machine":
             board[int(move // 3.1)][int(move // 3.1)] = "X"
             player = "User"
-        display_board(board)
+            display_board(board)
 
     def win(board): #Verifica si hay un ganador
 
@@ -114,7 +118,7 @@ def run():
             elif all(i) and i[0] == "X":
                 win = "Machine"
         
-        #Tambien se hace la verificación por diagonales
+        #Tambien se hace la verificación por diagonal1es
         diag1 = [board[0][0],board[1][1],board[2][2]]
         diag2 = [board[0][2],board[1][1],board[2][0]]
 
