@@ -74,7 +74,7 @@ def run():
         
     def verify_move(board, move, player): #Esta funcion verifica que el movimiento a realizar sea posible dependiendo si la casilla esta vacia o no
             
-            x = board[int(move // 3.1)][int(move // 3.1)]
+            x = board[int(move // 3.1)][int((move - 1)  % 3)]
             y = (x == "X" or x == "O")
 
 
@@ -98,14 +98,14 @@ def run():
 
     def moving(board,move, player):#Esta funcion coloca el movimiento en el tablero
         if player == "User":
-            board[int(move // 3.1)][int(move // 3.1)] = "O"
+            board[int(move // 3.1)][int((move - 1) % 3)] = "O"
             display_board(board)
             player = "Machine"
             move = rand(1,9)
             verify_move(board, move, player)
 
         elif player == "Machine":
-            board[int(move // 3.1)][int(move // 3.1)] = "X"
+            board[int(move // 3.1)][int((move - 1) % 3)] = "X"
             player = "User"
             display_board(board)
 
@@ -144,12 +144,12 @@ def run():
         tie = []
         for i in board_lineal:
             if isinstance(i,str):
-                tie.append("str")
+                tie.append(True)
+            else:
+                tie.append(False)
+
         if all(tie):
             win = "tie"
-
-
-        print(f"{win}")
 
         return win
 
