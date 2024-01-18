@@ -2,47 +2,27 @@ from random import randint as rand
 
 def run():
     #Tablero inicial: Son solo numeros
-    board = [ [i for i in range(((j - 1) * 3) + 1,(j * 3) + 1)] for j in range(1,4)]
-    
-    #Display del Tablero
-    board_ = f"""
-            +--------+--------+--------+
-            |        |        |        |
-            |    {board[0][0]}   |   {board[0][1]}    |    {board[0][2]}   |
-            |        |        |        |
-            +--------+--------+--------+
-            |        |        |        |
-            |    {board[1][0]}   |   {board[1][1]}    |    {board[1][2]}   |
-            |        |        |        |
-            +--------+--------+--------+
-            |        |        |        |
-            |    {board[2][0]}   |   {board[2][1]}    |    {board[2][2]}   |
-            |        |        |        |
-            +--------+--------+--------+"""
-    
-    
-    
-    #Imprime el tablero por primera vez
-    print(board_)
+    def matrix_generator_nXn(n):
+        return [[j for j in range((i - 1) * n + 1, (i) * n + 1)] for i in range(1, n + 1)]
 
-    def display_board(board): #Funcion que imprime el tablero cuando sea necesario
+    board = matrix_generator_nXn(3)
 
-        board_ = f"""
-            +--------+--------+--------+
-            |        |        |        |
-            |    {board[0][0]}   |   {board[0][1]}    |    {board[0][2]}   |
-            |        |        |        |
-            +--------+--------+--------+
-            |        |        |        |
-            |    {board[1][0]}   |   {board[1][1]}    |    {board[1][2]}   |
-            |        |        |        |
-            +--------+--------+--------+
-            |        |        |        |
-            |    {board[2][0]}   |   {board[2][1]}    |    {board[2][2]}   |
-            |        |        |        |
-            +--------+--------+--------+"""
-        
-        print(board_)
+    def display_board(matrix): #Funcion que imprime el tablero cuando sea necesario
+        board_display = ""
+        cant_rows = len(matrix)
+        x1 = "+---------" * cant_rows + "+"
+        x2 = "|         " * cant_rows + "|"
+        for row in matrix:
+            x3 = "".join(["|    " + str(element) + "    " for element in row]) + "|"
+            if matrix.index(row) == 0:
+                board_display += (x1+"\n"+x2+"\n"+x3+"\n"+x2+"\n"+x1+"\n")
+            elif matrix.index(row) == (cant_rows - 1):
+                board_display += (x2+"\n"+x3+"\n"+x2+"\n"+x1)
+            else:
+                board_display += (x2+"\n"+x3+"\n"+x2+"\n"+x1+"\n")
+        print(board_display)
+    
+    display_board(board) #Imprime el tablero por primera vez
     
     def enter_move(board): #Funcion que recibe el movimiento del jugador
         try:
